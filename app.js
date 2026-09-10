@@ -1,6 +1,7 @@
 const SUPABASE_URL = "https://oajysgoeupdoonbempgz.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
@@ -9,25 +10,36 @@ const db = window.supabase.createClient(
 
 const $ = (id) => document.getElementById(id);
 
+let modules = [];
+
+
+/* =========================
+   STATUS
+========================= */
+
 function setStatus(text, type = "") {
   const el = $("status");
+
   if (!el) return;
 
   el.textContent = text;
-  el.className = type ? status ${type} : "status";
+
+  el.className = type
+    ? status ${type}
+    : "status";
 }
+
+
+/* =========================
+   LOGIN SCREEN
+========================= */
 
 function showLogin() {
   const login = $("loginScreen");
   const app = $("app");
 
-  if (login) login.classList.remove("hidden");
-  if (app) app.classList.add("hidden");
-}
+  if (login) {
+    login.classList.remove("hidden");
+  }
 
-function showApp() {
-  const login = $("loginScreen");
-  const app = $("app");
-
-  if (login) login.classList.add("hidden");
-  if (app) app.classList.remove("hid…
+  …
