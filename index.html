@@ -1,44 +1,58 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
+const SUPABASE_URL =
+  "https://oajysgoeupdoonbempgz.supabase.co";
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
 
-  <title>RARA ACADEMY</title>
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-  <!-- SUPABASE -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+/* =========================
+   HELPER
+========================= */
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f6f7fb;
-      color: #222;
-      min-height: 100vh;
-    }
+const $ = (id) =>
+  document.getElementById(id);
 
-    button,
-    input {
-      font-family: inherit;
-    }
+let modules = [];
 
-    /* =========================
-       LOGIN
-    ========================= */
 
-    #loginScreen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      p…
+/* =========================
+   MESSAGE
+========================= */
+
+function setMessage(text, type = "") {
+
+  const authMsg = $("authMsg");
+  const status = $("status");
+
+  if (authMsg) {
+    authMsg.textContent = text;
+    authMsg.className =
+      type ? msg ${type} : "msg";
+  }
+
+  if (status) {
+    status.textContent = text;
+    status.className =
+      type ? muted ${type} : "m…
+[03.00, 11/9/2026] Bu Guru Rara: function setMessage(text, type = "") {
+
+  const authMsg = $("authMsg");
+  const status = $("status");
+
+  if (authMsg) {
+    authMsg.textContent = text;
+    authMsg.className =
+      type ? msg ${type} : "msg";
+  }
+
+  if (status) {
+    status.textContent = text;
+    status.className =
+      type ? muted ${type} : "muted";
+  }
+}
