@@ -38,4 +38,6 @@ function setMessage(text, type = "") {
   if (status) {
     status.textContent = text;
     status.className =
-      type ? muted ${type} : "m…
+      type ? muted ${type} : "muted";
+  }
+}
