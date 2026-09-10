@@ -1,58 +1,1196 @@
-const SUPABASE_URL =
-  "https://oajysgoeupdoonbempgz.supabase.co";
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
 
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+  <title>RARA ACADEMY</title>
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f7fb;
+      color: #222;
+      min-height: 100vh;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #f8f5ff, #ffffff);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      padding: 35px 28px;
+      border-radius: 22px;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo h1 {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .logo p {
+      margin-top: 8px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+
+    .form-group input:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    }
+
+    .primary {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      background: #7c3aed;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary:hover {
+      background: #6d28d9;
+    }
+
+    .primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #fff0f0;
+      color: #c62828;
+    }
+
+    .message.success {
+      background: #effdf4;
+      color: #15803d;
+    }
+
+    .message.info {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    /* =========================
+       ACADEMY
+    ========================= */
+
+    #app {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: white;
+      border-bottom: 1px solid #eee;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar-brand {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .logout {
+      border: 1px solid #ddd;
+      background: white;
+      padding: 9px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .logout:hover {
+      background: #f5f5f5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px 20px 50px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #7c3aed, #9333ea);
+      color: white;
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 25px;
+    }
+
+    .hero h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    .hero-count {
+      margin-top: 20px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .search:focus {
+      border-color: #7c3aed;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .module-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid #eee;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .module-number {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #f3e8ff;
+      color: #7c3aed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .module-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .module-card p {
+      color: #777;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .module-button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 11px;
+      border: none;
+      border-radius: 10px;
+      background: #7c3aed;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .module-button:hover {
+      background: #6d28d9;
+    }
+
+    .status {
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .empty {
+      display: none;
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      color: #777;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+      .modules {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .login-card {
+        padding: 28px 20px;
+      }
+
+      .hero {
+        padding: 23px;
+      }
+
+      .hero h2 {
+        font-size: 23px;
+      }
+
+      .modules {
+        grid-template-columns: 1fr;
+      }
+
+      .navbar {
+        padding: 13px 15px;
+      }
+
+      .navbar-brand {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       LOGIN SCREEN
+  ========================= -->
+
+  <section id="loginScreen">
+
+    <div class="login-card">
+
+      <div class="logo">
+        <h1>RARA ACADEMY</h1>
+        <p>Silakan masuk untuk melanjutkan pembelajaran.</p>
+      </div>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+          <label for="email">Email</label>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="Masukkan email"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="Masukkan password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button
+          id="loginButton"
+          class="primary"
+          type="submit"
+        >
+          Masuk ke Academy →
+        </button>
+
+        <div
+          id="authMsg"
+          class="message"
+        ></div>
+
+      </form>
+
+    </div>
+
+  </section>
 
 
-/* =========================
-   HELPER
-========================= */
+  <!-- =========================
+       ACADEMY APP
+  ========================= -->
 
-const $ = (id) =>
-  document.getElementById(id);
+  <section id="app">
 
-let modules = [];
+    <nav class="navbar">
+
+      <div class="navbar-brand">
+        RARA ACADEMY
+      </div>
+
+      <button
+        id="logoutBtn"
+        class="logout"
+        type="button"
+      >
+        Keluar
+      </button>
+
+    </nav>
 
 
-/* =========================
-   MESSAGE
-========================= */
+    <main class="container">
 
-function setMessage(text, type = "") {
+      <section class="hero">
 
-  const authMsg = $("authMsg");
-  const status = $("status");
+        <h2>Selamat Datang di RARA Academy 👋</h2>
 
-  if (authMsg) {
-    authMsg.textContent = text;
-    authMsg.className =
-      type ? msg ${type} : "msg";
-  }
+        <p>
+          Pelajari materi academy secara bertahap
+          dan tingkatkan kemampuanmu.
+        </p>
 
-  if (status) {
-    status.textContent = text;
-    status.className =
-      type ? muted ${type} : "m…
-[03.00, 11/9/2026] Bu Guru Rara: function setMessage(text, type = "") {
+        <div
+          id="heroCount"
+          class="hero-count"
+        >
+          0 Modul tersedia
+        </div>
 
-  const authMsg = $("authMsg");
-  const status = $("status");
+      </section>
 
-  if (authMsg) {
-    authMsg.textContent = text;
-    authMsg.className =
-      type ? msg ${type} : "msg";
-  }
 
-  if (status) {
-    status.textContent = text;
-    status.className =
-      type ? muted ${type} : "muted";
-  }
-}
+      <div class="toolbar">
+
+        <input
+          id="search"
+          class="search"
+          type="search"
+          placeholder="Cari modul..."
+        >
+
+      </div>
+
+
+      <div
+        id="status"
+        class="status"
+      >
+        Memuat modul...
+      </div>
+
+
+      <h2 class="section-title">
+        Modul Pembelajaran
+      </h2>
+
+
+      <div
+        id="modules"
+        class="modules"
+      ></div>
+
+
+      <div
+        id="empty"
+        class="empty"
+      >
+        Modul yang kamu cari tidak ditemukan.
+      </div>
+
+    </main>
+
+  </section>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
+  <script>
+
+    /*
+      ==========================================
+      SUPABASE CONFIGURATION
+      ==========================================
+    */
+
+    const SUPABASE_URL =
+      "https://oajysgoeupdoonbempgz.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
+
+
+    /*
+      ==========================================
+      CREATE SUPABASE CLIENT
+      ==========================================
+    */
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    /*
+      ==========================================
+      ELEMENTS
+      ==========================================
+    */
+
+    const loginScreen =
+      document.getElementById("loginScreen");
+
+    const app =
+      document.getElementById("app");
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const emailInput =
+      document.getElementById("email");
+
+    const passwordInput =
+      document.getElementById("password");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const authMsg =
+      document.getElementById("authMsg");
+
+    const logoutBtn =
+      document.getElementById("logoutBtn");
+
+    const modulesContainer =
+      document.getElementById("modules");
+
+    const searchInput =
+      document.getElementById("search");
+
+    const empty =
+      document.getElementById("empty");
+
+    const status =
+      document.getElementById("status");
+
+    const heroCount =
+      document.getElementById("heroCount");
+
+
+    /*
+      ==========================================
+      MODULE DATA
+      ==========================================
+    */
+
+    const modulesData = [
+
+      {
+        id: 1,
+        title: "Introduction",
+        description:
+          "Pengenalan dasar dan materi awal RARA Academy."
+      },
+
+      {
+        id: 2,
+        title: "TikTok Affiliate",
+        description:
+          "Pelajari dasar TikTok Affiliate dan cara memulainya."
+      },
+
+      {
+        id: 3,
+        title: "Share Link",
+        description:
+          "Pelajari cara membagikan link affiliate dengan benar."
+      },
+
+      {
+        id: 4,
+        title: "Content Strategy",
+        description:
+          "Pelajari strategi membuat konten yang menarik."
+      },
+
+      {
+        id: 5,
+        title: "Personal Branding",
+        description:
+          "Bangun personal branding yang kuat dan konsisten."
+      },
+
+      {
+        id: 6,
+        title: "Monetization",
+        description:
+          "Pelajari dasar-dasar monetisasi dari konten."
+      }
+
+    ];
+
+
+    /*
+      ==========================================
+      MESSAGE
+      ==========================================
+    */
+
+    function showMessage(
+      message,
+      type = "info"
+    ) {
+
+      authMsg.textContent = message;
+
+      authMsg.className =
+        "message show " + type;
+
+    }
+
+
+    /*
+      ==========================================
+      SHOW LOGIN
+      ==========================================
+    */
+
+    function showLogin() {
+
+      loginScreen.style.display = "flex";
+
+      app.style.display = "none";
+
+    }
+
+
+    /*
+      ==========================================
+      SHOW ACADEMY
+      ==========================================
+    */
+
+    function showAcademy() {
+
+      loginScreen.style.display = "none";
+
+      app.style.display = "block";
+
+      renderModules(modulesData);
+
+    }
+
+
+    /*
+      ==========================================
+      LOGIN
+      ==========================================
+    */
+
+    async function loginUser(
+      email,
+      password
+    ) {
+
+      try {
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+          "Sedang masuk...";
+
+        showMessage(
+          "Menghubungkan ke Academy...",
+          "info"
+        );
+
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
+
+
+        if (error) {
+
+          console.error(
+            "Supabase login error:",
+            error
+          );
+
+          showMessage(
+            error.message,
+            "error"
+          );
+
+          loginButton.disabled = false;
+
+          loginButton.textContent =
+            "Masuk ke Academy →";
+
+          return;
+
+        }
+
+
+        if (!data || !data.user) {
+
+          showMessage(
+            "Login gagal. User tidak ditemukan.",
+            "error"
+          );
+
+          loginButton.disabled = false;
+
+          loginButton.textContent =
+            "Masuk ke Academy →";
+
+          return;
+
+        }
+
+
+        showMessage(
+          "Login berhasil. Membuka Academy...",
+          "success"
+        );
+
+
+        setTimeout(
+          function () {
+
+            showAcademy();
+
+          },
+          500
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Login exception:",
+          error
+        );
+
+        showMessage(
+          "Terjadi kesalahan: " +
+          error.message,
+          "error"
+        );
+
+        loginButton.disabled = false;
+
+        loginButton.textContent =
+          "Masuk ke Academy →";
+
+      }
+
+    }
+
+
+    /*
+      ==========================================
+      LOGIN FORM
+      ==========================================
+    */
+
+    loginForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+        const email =
+          emailInput.value.trim();
+
+        const password =
+          passwordInput.value;
+
+
+        if (!email) {
+
+          showMessage(
+            "Email wajib diisi.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (!password) {
+
+          showMessage(
+            "Password wajib diisi.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        loginUser(
+          email,
+          password
+        );
+
+      }
+    );
+
+
+    /*
+      ==========================================
+      LOGOUT
+      ==========================================
+    */
+
+    logoutBtn.addEventListener(
+      "click",
+      async function () {
+
+        try {
+
+          await supabaseClient.auth.signOut();
+
+          showLogin();
+
+          emailInput.value = "";
+
+          passwordInput.value = "";
+
+          showMessage(
+            "Kamu sudah keluar dari Academy.",
+            "success"
+          );
+
+        } catch (error) {
+
+          console.error(error);
+
+        }
+
+      }
+    );
+
+
+    /*
+      ==========================================
+      RENDER MODULES
+      ==========================================
+    */
+
+    function renderModules(
+      data
+    ) {
+
+      modulesContainer.innerHTML = "";
+
+      heroCount.textContent =
+        data.length +
+        " Modul tersedia";
+
+
+      if (data.length === 0) {
+
+        empty.style.display = "block";
+
+        status.textContent =
+          "Tidak ada modul.";
+
+        return;
+
+      }
+
+
+      empty.style.display = "none";
+
+      status.textContent =
+        data.length +
+        " modul tersedia.";
+
+
+      data.forEach(
+        function (module) {
+
+          const card =
+            document.createElement("div");
+
+          card.className =
+            "module-card";
+
+
+          card.innerHTML = `
+
+            <div class="module-number">
+              ${module.id}
+            </div>
+
+            <h3>
+              ${escapeHTML(module.title)}
+            </h3>
+
+            <p>
+              ${escapeHTML(module.description)}
+            </p>
+
+            <button
+              class="module-button"
+              type="button"
+              onclick="openModule(${module.id})"
+            >
+              Buka Modul
+            </button>
+
+          `;
+
+
+          modulesContainer.appendChild(
+            card
+          );
+
+        }
+      );
+
+    }
+
+
+    /*
+      ==========================================
+      SEARCH
+      ==========================================
+    */
+
+    searchInput.addEventListener(
+      "input",
+      function () {
+
+        const keyword =
+          searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+        if (!keyword) {
+
+          renderModules(
+            modulesData
+          );
+
+          return;
+
+        }
+
+
+        const filtered =
+          modulesData.filter(
+            function (module) {
+
+              return (
+                module.title
+                  .toLowerCase()
+                  .includes(keyword)
+                ||
+                module.description
+                  .toLowerCase()
+                  .includes(keyword)
+              );
+
+            }
+          );
+
+
+        renderModules(
+          filtered
+        );
+
+      }
+    );
+
+
+    /*
+      ==========================================
+      OPEN MODULE
+      ==========================================
+    */
+
+    function openModule(
+      id
+    ) {
+
+      const module =
+        modulesData.find(
+          function (item) {
+
+            return item.id === id;
+
+          }
+        );
+
+
+      if (!module) {
+
+        return;
+
+      }
+
+
+      alert(
+        "Modul " +
+        module.id +
+        ": " +
+        module.title +
+        "\n\nMateri modul akan ditambahkan."
+      );
+
+    }
+
+
+    /*
+      ==========================================
+      ESCAPE HTML
+      ==========================================
+    */
+
+    function escapeHTML(
+      value
+    ) {
+
+      return String(
+        value ?? ""
+      )
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    /*
+      ==========================================
+      CHECK EXISTING SESSION
+      ==========================================
+    */
+
+    async function checkSession() {
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getSession();
+
+
+        if (error) {
+
+          console.error(
+            "Session error:",
+            error
+          );
+
+          showLogin();
+
+          return;
+
+        }
+
+
+        if (
+          data &&
+          data.session &&
+          data.session.user
+        ) {
+
+          showAcademy();
+
+        } else {
+
+          showLogin();
+
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "Check session error:",
+          error
+        );
+
+        showLogin();
+
+      }
+
+    }
+
+
+    /*
+      ==========================================
+      AUTH STATE LISTENER
+      ==========================================
+    */
+
+    supabaseClient.auth.onAuthStateChange(
+      function (
+        event,
+        session
+      ) {
+
+        console.log(
+          "Auth event:",
+          event
+        );
+
+
+        if (
+          session &&
+          session.user
+        ) {
+
+          showAcademy();
+
+        } else {
+
+          showLogin();
+
+        }
+
+      }
+    );
+
+
+    /*
+      ==========================================
+      START
+      ==========================================
+    */
+
+    checkSession();
+
+  </script>
+
+</body>
+</html>
