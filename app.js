@@ -1,42 +1,41 @@
-/* =========================================
-   RARA ACADEMY - APP.JS
-   SUPABASE AUTH + MODULES
-========================================= */
-
 const SUPABASE_URL =
   "https://oajysgoeupdoonbempgz.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
 
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-/* =========================================
-   SUPABASE CLIENT
-========================================= */
 
-let db = null;
+/* =========================
+   HELPER
+========================= */
 
-try {
-  if (!window.supabase) {
-    throw new Error(
-      "Supabase library belum dimuat."
-    );
+const $ = (id) =>
+  document.getElementById(id);
+
+let modules = [];
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function setMessage(text, type = "") {
+
+  const authMsg = $("authMsg");
+  const status = $("status");
+
+  if (authMsg) {
+    authMsg.textContent = text;
+    authMsg.className =
+      type ? msg ${type} : "msg";
   }
 
-  db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-
-  console.log("SUPABASE CLIENT SIAP");
-
-} catch (error) {
-
-  console.error(
-    "SUPABASE ERROR:",
-    error
-  );
-}
-
-
-/* =============================…
+  if (status) {
+    status.textContent = text;
+    status.className =
+      type ? muted ${type} : "m…
