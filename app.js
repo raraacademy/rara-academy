@@ -1,5 +1,5 @@
 const SUPABASE_URL="https://oajysgoeupdoonbempgz.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const $=id=>document.getElementById(id);
 let modules=[];
