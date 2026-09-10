@@ -23,7 +23,10 @@ function setStatus(text, type = "") {
   if (!el) return;
 
   el.textContent = text;
-  el.className = type ? status ${type} : "status";
+
+  el.className = type
+    ? status ${type}
+    : "status";
 }
 
 
@@ -39,4 +42,4 @@ function showLogin() {
     login.classList.remove("hidden");
   }
 
-  if (app) …
+  …
