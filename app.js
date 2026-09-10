@@ -11,26 +11,32 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 
 /* =========================================
-   SUPABASE
+   SUPABASE CLIENT
 ========================================= */
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+let db = null;
+
+try {
+  if (!window.supabase) {
+    throw new Error(
+      "Supabase library belum dimuat."
+    );
+  }
+
+  db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  console.log("SUPABASE CLIENT SIAP");
+
+} catch (error) {
+
+  console.error(
+    "SUPABASE ERROR:",
+    error
+  );
+}
 
 
-/* =========================================
-   HELPER
-========================================= */
-
-const $ = (id) => document.getElementById(id);
-
-let modules = [];
-
-
-/* =========================================
-   STATUS
-========================================= */
-
-function…
+/* =============================…
