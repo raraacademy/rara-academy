@@ -1018,10 +1018,161 @@
       ==========================================
     */
 
-    function openModule(
-      id
-    ) {
+    function openModule(id) {
 
+  const module = modulesData.find(function (item) {
+    return item.id === id;
+  });
+
+  if (!module) return;
+
+  let content = "";
+
+  if (id === 1) {
+
+    content = `
+      <h2>Introduction RARA Academy</h2>
+
+      <p>
+        Selamat datang di RARA Academy.
+        Di academy ini kamu akan belajar secara bertahap
+        mengenai dunia content creator dan TikTok Affiliate.
+      </p>
+
+      <h3>Yang akan kamu pelajari</h3>
+
+      <ul>
+        <li>Dasar-dasar TikTok Affiliate</li>
+        <li>Cara mendaftar TikTok Affiliate</li>
+        <li>Cara memilih produk</li>
+        <li>Cara membuat konten</li>
+        <li>Cara menggunakan affiliate share link</li>
+        <li>Strategi meningkatkan penjualan</li>
+      </ul>
+
+      <h3>Tujuan Pembelajaran</h3>
+
+      <p>
+        Setelah menyelesaikan materi di RARA Academy,
+        kamu diharapkan memahami dasar-dasar TikTok Affiliate
+        dan mampu mulai membuat konten sendiri.
+      </p>
+    `;
+
+  } else {
+
+    content = `
+      <h2>${escapeHTML(module.title)}</h2>
+
+      <p>
+        ${escapeHTML(module.description)}
+      </p>
+
+      <p>
+        Materi lengkap modul ini akan segera ditambahkan.
+      </p>
+    `;
+  }
+
+  const modal = document.createElement("div");
+
+  modal.style.position = "fixed";
+  modal.style.inset = "0";
+  modal.style.background = "rgba(0,0,0,0.6)";
+  modal.style.display = "flex";
+  modal.style.alignItems = "center";
+  modal.style.justifyContent = "center";
+  modal.style.padding = "20px";
+  modal.style.zIndex = "9999";
+
+  modal.innerHTML = `
+    <div style="
+      width:100%;
+      max-width:700px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:30px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.25);
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:20px;
+      ">
+
+        <strong>Modul ${module.id}</strong>
+
+        <button
+          type="button"
+          id="closeModule"
+          style="
+            border:none;
+            background:#f1f1f1;
+            width:38px;
+            height:38px;
+            border-radius:50%;
+            font-size:20px;
+            cursor:pointer;
+          "
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div style="
+        line-height:1.7;
+        color:#333;
+      ">
+        ${content}
+      </div>
+
+      <button
+        type="button"
+        id="finishModule"
+        style="
+          width:100%;
+          margin-top:25px;
+          padding:14px;
+          border:none;
+          border-radius:12px;
+          background:#7c3aed;
+          color:white;
+          font-weight:700;
+          cursor:pointer;
+        "
+      >
+        ✓ Tandai Modul Selesai
+      </button>
+
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  document
+    .getElementById("closeModule")
+    .addEventListener("click", function () {
+      modal.remove();
+    });
+
+  document
+    .getElementById("finishModule")
+    .addEventListener("click", function () {
+
+      alert(
+        "Modul " +
+        module.title +
+        " berhasil ditandai selesai."
+      );
+
+      modal.remove();
+    });
+    }
       const module =
         modulesData.find(
           function (item) {
