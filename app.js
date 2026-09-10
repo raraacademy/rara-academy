@@ -1,6 +1,6 @@
 const SUPABASE_URL = "https://oajysgoeupdoonbempgz.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY = "GANTI_DENGAN_KEY_PUBLISHABLE_KAMU";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
