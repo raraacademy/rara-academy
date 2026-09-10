@@ -1,76 +1,208 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#191927">
-<title>RARA ACADEMY</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#191927">
+
+  <title>RARA ACADEMY</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
-<section id="loginScreen" class="auth-screen">
-  <div class="glow g1"></div><div class="glow g2"></div>
-  <div class="auth-card">
-    <div class="brand-mark">RA</div>
-    <span class="eyebrow">RARA ACADEMY</span>
-    <h1>Belajar lebih mudah,<br><span>berkembang lebih hebat.</span></h1>
-    <p class="muted">Masuk untuk melanjutkan perjalanan belajar kamu.</p>
-    <form id="loginForm">
-      <label>Email</label><input id="email" type="email" placeholder="nama@email.com" required>
-      <label>Password</label><input id="password" type="password" placeholder="••••••••" required>
-      <button class="primary full" type="submit">
-  Masuk ke Academy <b>→</b>
-</button>
-  Masuk ke Academy <b>→</b>
-</button>
-    </form>
-    <p id="authMsg" class="msg"></p>
-    <small>Akun dikelola melalui Supabase Auth.</small>
-  </div>
-</section>
 
-<div id="app" class="hidden">
-<header class="topbar">
-  <div class="brand"><div class="brand-mark small">RA</div><div><strong>RARA</strong><span>ACADEMY</span></div></div>
-  <button id="logoutBtn" class="ghost">Keluar</button>
-</header>
+  <!-- =========================
+       LOGIN
+  ========================== -->
 
-<main>
-<section class="hero">
-  <div class="hero-copy">
-    <span class="eyebrow">PLATFORM PEMBELAJARAN</span>
-    <h2>Belajar.<br>Berkembang.<br><em>Jadi Lebih Hebat.</em></h2>
-    <p>Temukan materi pembelajaran yang sederhana, terstruktur, dan mudah dipahami.</p>
-    <button id="startBtn" class="primary">Mulai Belajar <b>↓</b></button>
-  </div>
-  <div class="hero-art">
-    <div class="orb"></div><div class="orb ring"></div>
-    <div class="learning-card"><div class="spark">✦</div><strong>Learning<br>Journey</strong><small>Keep growing.</small></div>
-    <div class="count-card"><span>MODUL TERSEDIA</span><strong id="heroCount">0</strong><small>materi</small></div>
-  </div>
-</section>
+  <section id="loginScreen" class="auth-screen">
 
-<section id="modulesSection" class="content">
-  <div class="heading">
-    <div><span class="eyebrow">ACADEMY LIBRARY</span><h3>Materi Pembelajaran</h3><p id="status" class="muted">Memuat materi...</p></div>
-    <div class="search"><span>⌕</span><input id="search" type="search" placeholder="Cari materi..."></div>
-  </div>
-  <div id="modules" class="grid"></div>
-  <div id="empty" class="empty hidden"><div>⌕</div><h4>Materi tidak ditemukan</h4><p>Coba kata kunci lain.</p></div>
-</section>
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
 
-<section class="features">
-  <div><b>01</b><span><strong>Terstruktur</strong><small>Belajar langkah demi langkah</small></span></div>
-  <div><b>02</b><span><strong>Mudah Dipahami</strong><small>Materi dibuat sederhana</small></span></div>
-  <div><b>03</b><span><strong>Terus Berkembang</strong><small>Bangun skill setiap hari</small></span></div>
-</section>
-</main>
-<footer><strong>RARA ACADEMY</strong><span>Belajar. Berkembang. Jadi Lebih Hebat.</span></footer>
-</div>
-<script src="app.js"></script>
-</body>
-</html>
+    <div class="auth-card">
+
+      <div class="brand-mark">RA</div>
+
+      <span class="eyebrow">RARA ACADEMY</span>
+
+      <h1>
+        Belajar lebih mudah,<br>
+        <span>berkembang lebih hebat.</span>
+      </h1>
+
+      <p class="muted">
+        Masuk untuk melanjutkan perjalanan belajar kamu.
+      </p>
+
+      <form id="loginForm">
+
+        <label for="email">Email</label>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="nama@email.com"
+          autocomplete="email"
+          required
+        >
+
+        <label for="password">Password</label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        >
+
+        <button
+          id="loginBtn"
+          class="primary full"
+          type="submit"
+        >
+          Masuk ke Academy <b>→</b>
+        </button>
+
+      </form>
+
+      <p id="authMsg" class="msg"></p>
+
+      <small>
+        Akun dikelola melalui Supabase Auth.
+      </small>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       ACADEMY APP
+  ========================== -->
+
+  <div id="app" class="hidden">
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+      <div class="brand">
+
+        <div class="brand-mark small">
+          RA
+        </div>
+
+        <div>
+          <strong>RARA</strong>
+          <span>ACADEMY</span>
+        </div>
+
+      </div>
+
+      <button
+        id="logoutBtn"
+        class="ghost"
+        type="button"
+      >
+        Keluar
+      </button>
+
+    </header>
+
+
+    <main>
+
+      <!-- HERO -->
+
+      <section class="hero">
+
+        <div class="hero-copy">
+
+          <span class="eyebrow">
+            PLATFORM PEMBELAJARAN
+          </span>
+
+          <h2>
+            Belajar.<br>
+            Berkembang.<br>
+            <em>Jadi Lebih Hebat.</em>
+          </h2>
+
+          <p>
+            Temukan materi pembelajaran yang sederhana,
+            terstruktur, dan mudah dipahami.
+          </p>
+
+          <button
+            id="startBtn"
+            class="primary"
+            type="button"
+          >
+            Mulai Belajar <b>↓</b>
+          </button>
+
+        </div>
+
+
+        <div class="hero-art">
+
+          <div class="orb"></div>
+          <div class="orb ring"></div>
+
+          <div class="learning-card">
+
+            <div class="spark">
+              ✦
+            </div>
+
+            <strong>
+              Learning<br>
+              Journey
+            </strong>
+
+            <small>
+              Keep growing.
+            </small>
+
+          </div>
+
+
+          <div class="count-card">
+
+            <span>
+              MODUL TERSEDIA
+            </span>
+
+            <strong id="heroCount">
+              0
+            </strong>
+
+            <small>
+              materi
+            </small>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- MODULES -->
+
+      <section
+        id="modulesSection"
+    …
