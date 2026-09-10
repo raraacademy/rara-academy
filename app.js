@@ -4,40 +4,40 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_tBhLLkdy1XFacCWg-f8lNA_wKakcfJh";
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-
-
-/* =========================
-   HELPER
-========================= */
-
-const $ = (id) =>
-  document.getElementById(id);
-
+let db;
 let modules = [];
 
+function $(id) {
+  return document.getElementById(id);
+}
 
-/* =========================
-   MESSAGE
-========================= */
-
-function setMessage(text, type = "") {
-
+function showMessage(text, type = "") {
   const authMsg = $("authMsg");
-  const status = $("status");
 
   if (authMsg) {
     authMsg.textContent = text;
-    authMsg.className =
-      type ? msg ${type} : "msg";
-  }
-
-  if (status) {
-    status.textContent = text;
-    status.className =
-      type ? muted ${type} : "muted";
+    authMsg.className = type
+      ? msg ${type}
+      : "msg";
   }
 }
+
+function showLogin() {
+  const loginScreen = $("loginScreen");
+  const app = $("app");
+
+  if (loginScreen) {
+    loginScreen.classList.remove("hidden");
+  }
+
+  if (app) {
+    app.classList.add("hidden");
+  }
+}
+
+function showApp() {
+  const loginScreen = $("loginScreen");
+  const app = $("app");
+
+  if (loginScreen) {
+    loginScreen.cl…
