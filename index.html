@@ -1,75 +1,72 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RARA ACADEMY</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#191927">
+<title>RARA ACADEMY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">RARA <span>ACADEMY</span></div>
-    <button id="logoutBtn" class="btn outline hidden">Keluar</button>
-  </header>
+<section id="loginScreen" class="auth-screen">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="auth-card">
+    <div class="brand-mark">RA</div>
+    <span class="eyebrow">RARA ACADEMY</span>
+    <h1>Belajar lebih mudah,<br><span>berkembang lebih hebat.</span></h1>
+    <p class="muted">Masuk untuk melanjutkan perjalanan belajar kamu.</p>
+    <form id="loginForm">
+      <label>Email</label><input id="email" type="email" placeholder="nama@email.com" required>
+      <label>Password</label><input id="password" type="password" placeholder="••••••••" required>
+      <button class="primary full" type="submit">Masuk ke Academy <b>→</b></button>
+    </form>
+    <p id="authMsg" class="msg"></p>
+    <small>Akun dikelola melalui Supabase Auth.</small>
+  </div>
+</section>
 
-  <main>
-    <section id="landing" class="hero">
-      <div>
-        <p class="eyebrow">PLATFORM PEMBELAJARAN</p>
-        <h1>Belajar. Berkembang.<br><span>Jadi Lebih Hebat.</span></h1>
-        <p class="lead">Selamat datang di RARA ACADEMY — tempat belajar online yang sederhana dan mudah digunakan.</p>
-        <button id="startBtn" class="btn">Mulai Belajar</button>
-      </div>
-    </section>
+<div id="app" class="hidden">
+<header class="topbar">
+  <div class="brand"><div class="brand-mark small">RA</div><div><strong>RARA</strong><span>ACADEMY</span></div></div>
+  <button id="logoutBtn" class="ghost">Keluar</button>
+</header>
 
-    <section id="auth" class="card auth-card hidden">
-      <h2 id="authTitle">Masuk ke RARA ACADEMY</h2>
-      <p id="authInfo">Gunakan akun kamu untuk masuk.</p>
-      <form id="authForm">
-        <input id="nameInput" type="text" placeholder="Nama lengkap" class="register-only hidden">
-        <input id="emailInput" type="email" placeholder="Email" required>
-        <input id="passwordInput" type="password" placeholder="Password" minlength="6" required>
-        <button class="btn" type="submit" id="authSubmit">Masuk</button>
-      </form>
-      <button id="toggleAuth" class="text-btn">Belum punya akun? Daftar</button>
-      <p id="message" class="message"></p>
-    </section>
+<main>
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">PLATFORM PEMBELAJARAN</span>
+    <h2>Belajar.<br>Berkembang.<br><em>Jadi Lebih Hebat.</em></h2>
+    <p>Temukan materi pembelajaran yang sederhana, terstruktur, dan mudah dipahami.</p>
+    <button id="startBtn" class="primary">Mulai Belajar <b>↓</b></button>
+  </div>
+  <div class="hero-art">
+    <div class="orb"></div><div class="orb ring"></div>
+    <div class="learning-card"><div class="spark">✦</div><strong>Learning<br>Journey</strong><small>Keep growing.</small></div>
+    <div class="count-card"><span>MODUL TERSEDIA</span><strong id="heroCount">0</strong><small>materi</small></div>
+  </div>
+</section>
 
-    <section id="dashboard" class="dashboard hidden">
-      <div class="welcome card">
-        <div>
-          <p class="eyebrow">DASHBOARD</p>
-          <h2>Halo, <span id="userName">Teman</span> 👋</h2>
-          <p>Selamat datang kembali di RARA ACADEMY.</p>
-        </div>
-      </div>
+<section id="modulesSection" class="content">
+  <div class="heading">
+    <div><span class="eyebrow">ACADEMY LIBRARY</span><h3>Materi Pembelajaran</h3><p id="status" class="muted">Memuat materi...</p></div>
+    <div class="search"><span>⌕</span><input id="search" type="search" placeholder="Cari materi..."></div>
+  </div>
+  <div id="modules" class="grid"></div>
+  <div id="empty" class="empty hidden"><div>⌕</div><h4>Materi tidak ditemukan</h4><p>Coba kata kunci lain.</p></div>
+</section>
 
-      <h2 class="section-title">Kursus Saya</h2>
-      <div class="courses">
-        <article class="course card">
-          <div class="course-icon">📚</div>
-          <h3>Fundamental RARA Academy</h3>
-          <p>Materi dasar untuk memulai proses belajar kamu.</p>
-          <button class="btn small" onclick="showComingSoon()">Mulai Kursus</button>
-        </article>
-        <article class="course card">
-          <div class="course-icon">🎯</div>
-          <h3>Skill & Pengembangan</h3>
-          <p>Materi praktis untuk meningkatkan kemampuan.</p>
-          <button class="btn small" onclick="showComingSoon()">Mulai Kursus</button>
-        </article>
-        <article class="course card">
-          <div class="course-icon">🏆</div>
-          <h3>Program Lanjutan</h3>
-          <p>Kembangkan kemampuan kamu ke level berikutnya.</p>
-          <button class="btn small" onclick="showComingSoon()">Mulai Kursus</button>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <div id="loading" class="loading hidden">Memuat...</div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="app.js"></script>
+<section class="features">
+  <div><b>01</b><span><strong>Terstruktur</strong><small>Belajar langkah demi langkah</small></span></div>
+  <div><b>02</b><span><strong>Mudah Dipahami</strong><small>Materi dibuat sederhana</small></span></div>
+  <div><b>03</b><span><strong>Terus Berkembang</strong><small>Bangun skill setiap hari</small></span></div>
+</section>
+</main>
+<footer><strong>RARA ACADEMY</strong><span>Belajar. Berkembang. Jadi Lebih Hebat.</span></footer>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
