@@ -2760,7 +2760,20 @@ function openModule(id){
       : module.icon;
 
 
-  if(module.mantra){
+  if(module.id === 1){
+
+    modalInfo.innerHTML =
+      `Modul ini berisi tentang cara membuat <b>Video Iklan Profesional</b>. 
+      Silakan simak video tutorial di atas, dan gunakan tools yang ada pada modul ini. 
+      Jika ada pertanyaan atau butuh bantuan, silakan hubungi Admin melalui 
+      <a href="https://api.whatsapp.com/send?phone=628211877386&text=Halo,%20Admin!%20Aku%20masih%20bingung%20nih%20belajar%20modul.%20Tolong%20bantuannya%20ya."
+         target="_blank"
+         rel="noopener noreferrer"
+         style="color:#ff8a00;font-weight:700;text-decoration:none;">
+         WhatsApp
+      </a>.`;
+
+  }else if(module.mantra){
 
     modalInfo.textContent =
       "Modul Mantra Foto akan menjadi "
