@@ -2060,7 +2060,9 @@ const modulesData = [
     category:"VIDEO",
     icon:"🎬",
     description:
-      "Pelajari pembuatan video iklan dengan konsep visual yang profesional."
+      "Pelajari pembuatan video iklan dengan konsep visual yang profesional.",
+    url:
+      "https://chatgpt.com/g/g-6a2c78fd94f88191aca2be1b8969d294-aigo-iklan-profesional"
   },
 
   {
@@ -3191,9 +3193,26 @@ modalAction.addEventListener(
   "click",
   function(){
 
+    const module =
+      modulesData.find(
+        function(item){
+          return item.title === modalTitle.textContent;
+        }
+      );
+
+    if(module && module.url){
+
+      window.open(
+        module.url,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+      return;
+    }
+
     const title =
       modalTitle.textContent;
-
 
     if(
       title === "Mantra Foto"
